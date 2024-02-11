@@ -1,0 +1,2 @@
+# LOGS-CCDSTRU-MP
+This is the MP for CCDSTRU
