@@ -113,33 +113,47 @@ void initializeP(struct set2D *setP){
     setP->maxSize = 2;
 }
 
+void NextPlayerMove(cord pos, struct set1D *F1, struct set1D *F2, struct set1D *F3, bool over, bool good, bool next){
+    int a = pos[0];
+    int b = pos[0];
+    int c = (a - 1) / 3 + 1;
+    int d = (b - 1) / 3 + 1;
+    
+}
+
+void GameOver(bool *over, bool *next){
+    String15 result;
+
+    if (!*over) 
+        *next = !(*next);
+}
+
+
 int main(int argc, char const *argv[])
 {
 
     // Applicable Sets
-    struct set1D setU;
-    struct set1D setT;
-
-    struct set2D setC;
-
-    struct set2D setF;
+    struct set1D setU, setT;
 
     bool setV[2] = {true, false};
 
-    struct set2D setS;
-    initializeS(&setS);
+    struct set2D setC, setF, setS, setP;
 
-    struct set2D setP;
+    initializeS(&setS);
     initializeP(&setP);
     
     // System Variables
     bool good = false;
     bool next = false;
     bool over = false;
-
+    cord C1;
+    cord C2;
+    cord F1;
+    cord F2;
+    cord F3; 
 
     set2DPrint(&setS);
 
-
+    GameOver(&over, &next);
     return 0;
 }
