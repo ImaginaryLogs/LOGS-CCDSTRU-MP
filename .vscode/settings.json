@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "stdbool.h": "c",
+        "stdio.h": "c",
+        "initializer_list": "c",
+        "type_traits": "c",
+        "xtree": "c",
+        "xutility": "c"
+    }
+}
