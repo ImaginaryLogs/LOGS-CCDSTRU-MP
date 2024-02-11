@@ -54,7 +54,19 @@ void set1DCopyFromCord1D(cord *srce, cord *dest, int sizeDest){
     }
 }
 
-void set2DCopy(){}
+void set1DCopy(struct set1D *setSRCE, struct set1D *setDEST){
+    int i, size = setDEST->length;
+    for(i = 0; i < size; i++){
+        cordCopy(setSRCE->D1Array[i], setDEST->D1Array[i]);
+    }
+}
+
+void set2DCopy(struct set2D *setSRCE, struct set2D *setDEST){
+    int i, size = setDEST->width;
+    for(i = 0; i < size; i++){
+        set1DCopy(&(setSRCE->D2Array[i]), &(setDEST->D2Array[i]));
+    }
+}
 
 void set2DPrint(struct set2D *set){
     int length, width = set->width;
@@ -103,7 +115,6 @@ void initializeP(struct set2D *setP){
 
 int main(int argc, char const *argv[])
 {
-    
 
     // Applicable Sets
     struct set1D setU;
@@ -125,7 +136,7 @@ int main(int argc, char const *argv[])
     bool good = false;
     bool next = false;
     bool over = false;
-    
+
 
     set2DPrint(&setS);
 
