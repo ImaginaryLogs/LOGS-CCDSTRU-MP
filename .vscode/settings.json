@@ -5,7 +5,8 @@
     "initializer_list": "c",
     "type_traits": "c",
     "xtree": "c",
-    "xutility": "c"
+    "xutility": "c",
+    "limits": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
