@@ -20,6 +20,8 @@ struct set2D {
     int maxSize;
 };
 
+
+// #=====| Functions of Coordinates |======#
 /**
  * @brief Source := Destination
  * @note Copies coordinate from Source to Destination.
@@ -38,6 +40,7 @@ void coordCopy(coord Destination, coord Source){
 void coordPrint(coord Coordinate){
     printf("(%d, %d) ", Coordinate[0], Coordinate[1]);
 }
+
 /**
  * @brief  (A, B) == (C, D) 
  * @param  A: 
@@ -50,6 +53,18 @@ bool cordEqual(coord A, coord B){
     return A[0] == B[0] && A[1] == B[1];
 }
 
+// #=====| Functions of ARRAY 1D Sets |======#
+/**
+ * @brief (Array1D) Prints 1D Set 
+ * @param set[]: The 1D Array you want to print.
+ * @param size: Size of 1D Array
+ */
+void cord1DPrint(coord set[], int size){
+    int i;
+    for(i = 0; i < size; i++)
+        coordPrint(set[i]);
+    printf("\n");
+}
 
 /**
  * @brief (Array1D) Srce[] := Dest[]
@@ -65,6 +80,7 @@ void set1DCopyFromCord1D(coord *srce, coord *dest, int sizeDest){
     }
 }
 
+// #=====| Functions of STRUCT 1D Sets |======#
 /**
  * @brief (Struct1D) Prints 1D Set 
  * @param *set Pointer to a struct set1D
@@ -78,18 +94,6 @@ void set1DPrint(struct set1D *set){
 }
 
 /**
- * @brief (Array1D) Prints 1D Set 
- * @param set[]: The 1D Array you want to print.
- * @param size: Size of 1D Array
- */
-void cord1DPrint(coord set[], int size){
-    int i;
-    for(i = 0; i < size; i++)
-        coordPrint(set[i]);
-    printf("\n");
-}
-
-/**
  * @brief (Struct1D) Copies SRCE (Struct of 1D set) to DEST (Struct of 1D set)
  * @param *setDEST: Pointer to 1D Set you are grabbing from
  * @param *setSRCE: Pointer to 1D Set you want to assign
@@ -98,32 +102,6 @@ void set1DCopy(struct set1D *setDEST, struct set1D *setSRCE){
     int i, size = setSRCE->length;
     for(i = 0; i < size; i++){
         coordCopy(setDEST->D1Array[i], setSRCE->D1Array[i]);
-    }
-}
-
-/**
- * @brief (Struct2D) Copies SRCE (Struct of 2D set) to DEST (Struct of 2D set)
- * @param *setDEST: Pointer to 2D Set you are grabbing from
- * @param *setSRCE: Pointer to 2D Set you want to assign
- */
-void set2DCopy(struct set2D *setSRCE, struct set2D *setDEST){
-    int i, size = setDEST->width;
-    for(i = 0; i < size; i++){
-        set1DCopy(&(setSRCE->D2Array[i]), &(setDEST->D2Array[i]));
-    }
-}
-
-/**
- * @brief (Struct2D) Prints 2D Set
- * @param *set The 2D Array you want to print.
- */
-void set2DPrint(struct set2D *set){
-    int length, width = set->width;
-    int row, col;
-    printf("Printing 2D: \n");
-    for(row = 0; row < width; row++){
-        printf("\t%2d: ", row);
-        set1DPrint(&(set->D2Array[row]));
     }
 }
 
@@ -148,6 +126,33 @@ bool set1DSearch(coord key, struct set1D *setSource, int *location){
     }
     
     return false;
+}
+
+// #=====| Functions of STRUCT 2D Sets |======#
+/**
+ * @brief (Struct2D) Prints 2D Set
+ * @param *set The 2D Array you want to print.
+ */
+void set2DPrint(struct set2D *set){
+    int length, width = set->width;
+    int row, col;
+    printf("Printing 2D: \n");
+    for(row = 0; row < width; row++){
+        printf("\t%2d: ", row);
+        set1DPrint(&(set->D2Array[row]));
+    }
+}
+
+/**
+ * @brief (Struct2D) Copies SRCE (Struct of 2D set) to DEST (Struct of 2D set)
+ * @param *setDEST: Pointer to 2D Set you are grabbing from
+ * @param *setSRCE: Pointer to 2D Set you want to assign
+ */
+void set2DCopy(struct set2D *setSRCE, struct set2D *setDEST){
+    int i, size = setDEST->width;
+    for(i = 0; i < size; i++)
+        set1DCopy(&(setSRCE->D2Array[i]), &(setDEST->D2Array[i]));
+    
 }
 
 /**
@@ -176,6 +181,7 @@ bool set2DSearch(coord key, struct set2D *setSource, coord location){
     return false;
 }
 
+// #=====| Other functions |=================#
 /**
  * @brief Initialize (set2D) Set S based on MP Specs  
  * @param *setS: A set2D struct you will assign as S
@@ -199,7 +205,6 @@ void initializeS(struct set2D *setS){
     setS->width = 4;
     setS->maxSize = 6;
 }
-
 
 /**
  * @brief Initialize (set2D) Set P based on MP Specs  
@@ -235,13 +240,10 @@ void GameOver(bool *over, bool *next){
         *next = !(*next);
 }
 
-
 int main(int argc, char const *argv[])
 {
-
     // Applicable Sets
     struct set1D setU, setT;
-
 
     bool setV[2] = {true, false};
 
@@ -249,7 +251,6 @@ int main(int argc, char const *argv[])
 
     coord output = {0};
     coord key = {4, 6};
-
 
     initializeS(&setS);
     initializeP(&setP);
