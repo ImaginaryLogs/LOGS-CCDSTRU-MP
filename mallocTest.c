@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 typedef char String15[16];
-typedef int cord[2];
+typedef int coord[2];
 
 
 int main(int argc, char const *argv[])
@@ -37,11 +37,11 @@ int main(int argc, char const *argv[])
     bool good = false;
     bool next = false;
     bool over = false;
-    cord C1;
-    cord C2;
-    cord F1;
-    cord F2;
-    cord F3; 
+    coord C1;
+    coord C2;
+    coord F1;
+    coord F2;
+    coord F3; 
 
     return 0;
 }
