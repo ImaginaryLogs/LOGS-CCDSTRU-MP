@@ -1,18 +1,20 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#define MAXSIZE 36
 
 typedef char String15[16];
 typedef int cord[2];
 
+// Vector Type
 struct set1D {
-    cord D1Array[36];
+    cord D1Array[MAXSIZE*MAXSIZE];
     int length;
     int maxSize;
 };
 
 struct set2D {
-    struct set1D D2Array[6];
+    struct set1D D2Array[MAXSIZE];
     int width;
     int maxSize;
 };
@@ -27,16 +29,8 @@ void cordPrint(cord Coordinate){
     printf("(%d, %d) ", Coordinate[0], Coordinate[1]);
 }
 
-bool coordEqual(cord A, cord B){
+bool cordEqual(cord A, cord B){
     return A[0] == B[0] && A[1] == B[1];
-}
-
-
-void cord1DPrint(int set[][2], int size){
-    int i;
-    for(i = 0; i < size; i++)
-        cordPrint(set[i]);
-    printf("\n");
 }
 
 void set1DPrint(struct set1D *set){
@@ -52,6 +46,13 @@ void set1DCopyFromCord1D(cord *srce, cord *dest, int sizeDest){
     for(i = 0; i < sizeDest; i++){
         cordCopy(srce[i], dest[i]);
     }
+}
+
+void cord1DPrint(int set[][2], int size){
+    int i;
+    for(i = 0; i < size; i++)
+        cordPrint(set[i]);
+    printf("\n");
 }
 
 void set1DCopy(struct set1D *setSRCE, struct set1D *setDEST){
@@ -78,6 +79,22 @@ void set2DPrint(struct set2D *set){
     }
 }
 
+void set2DSearch(cord key, struct set2D *set, cord output){
+    output[0] = -1;
+    output[1] = -1;
+    int i, j;
+    for(i = 0; i < set->width; i++){
+        for(j = 0; j < set->D2Array[i].length; j++){
+            cordPrint(set->D2Array[i].D1Array[j]);
+            if(cordEqual(key, set->D2Array[i].D1Array[j])) {
+                output[0] = i;
+                output[1] = j;
+            }
+        }
+        printf("\n");
+    }
+}
+
 void initializeS(struct set2D *setS){
     cord Quad[6][6] = {
         {{1, 1}, {1, 3}, {2, 2}, {3, 1}, {3, 3}}, 
@@ -87,6 +104,7 @@ void initializeS(struct set2D *setS){
     };
 
     int i;
+
     for(i = 0; i < 3; i++){
         set1DCopyFromCord1D(setS->D2Array[i].D1Array, Quad[i], 5);
         setS->D2Array[i].length = 5;
@@ -139,9 +157,14 @@ int main(int argc, char const *argv[])
 
     struct set2D setC, setF, setS, setP;
 
+    cord output;
+    cord key = {4, 6};
+
     initializeS(&setS);
     initializeP(&setP);
-    
+    set2DSearch(key, &setS, output);
+    cordPrint(output);
+    printf("\n");
     // System Variables
     bool good = false;
     bool next = false;
