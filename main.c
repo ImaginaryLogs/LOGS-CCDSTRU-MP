@@ -1,3 +1,14 @@
+/*
+* TODO: 
+*   - Set Functions:
+*        - Set Union, Intersection, and Difference.
+*   - Test Sort Selection.
+*   - Board Coordinate Print Function
+*   - System States and Behavior:
+*       - Next Player Move
+*       - Game Over 
+*/
+
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -366,6 +377,7 @@ void GameOver(bool *over, bool *next){
     if (!*over) 
         *next = !(*next);
 }
+
 
 int main(int argc, char const *argv[])
 {
