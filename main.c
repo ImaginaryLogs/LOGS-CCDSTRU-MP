@@ -247,23 +247,35 @@ bool set2DSearch0Dkey(coord key, struct set2D *setSource, coord location){
     return false;
 }
 
-bool set2DSearch1Dkey(struct set1D *key, struct set2D *setSource, coord location){
-    int temp;
+/**
+ * @brief is key ∈ Source True?
+ * @note (Struct2D) Searches up setSource (Struct of 2D set) for the key. Location of key is in output - returns -1 if not found.
+ * @param key: Coordinate you want to look for.
+ * @param *setSource: 2D Set you want to look into.
+ * @param location: Location of key in the array by row.
+ * @return Boolean if Key is in the set.
+ * @retval 1 if key ∈ Source
+ * @retval 0 if key ∉ Source
+ */
+bool set2DSearchFor1Dkey(struct set1D *key, struct set2D *setSource, int *location){
     int i, j;
-    int isSearch0DSuccess;
+    int isSearch0DSuccessful;
     int isFound = false;
+
     printf("Searching: Set with size %d\n", key->length);
     set1DPrint(key);
     printf("inside the set\n");
     set2DPrint(setSource);
-    for (i = 0; i < key->length && !isFound; j++){
-        isSearch0DSuccess = true;
-        for (j = 0; j < setSource->D2Array[i].length && isSearch0DSuccess; j++){
-            isSearch0DSuccess = set1DEqual(key, &setSource->D2Array[j]);
-        }
-        printf("E: %d\n", j == setSource->D2Array[i].length);
+
+    for (i = 0; i < key->length && !isFound; i++){
+        isSearch0DSuccessful = true;
+
+        for (j = 0; j < setSource->D2Array[i].length && isSearch0DSuccessful; j++)
+            isSearch0DSuccessful = set1DEqual(key, &setSource->D2Array[j]);
+
         if (j == setSource->D2Array[i].length){
             isFound = true;
+            *location = i;
         }
     }
     return isFound; 
@@ -271,19 +283,28 @@ bool set2DSearch1Dkey(struct set1D *key, struct set2D *setSource, coord location
 
 // #=====| Other functions |=================#
 
+/**
+ * @brief ∃x ( x∈P(S) ∧ |x| > 0 ∧ x ∈ P )
+ * @note Is there a subset of S that exist that is not empty and is an element of set P?
+ * @param *powerSetofSomeSet: A set2D struct of a power set created before hand of some set
+ * @param *setP: A set2D struct of a set assigned as set P
+ * @return boolean if it exists or not.
+ * @retval TRUE if ∃x
+ * @retval FALSE if ¬∃x
+ */
 bool thereExistCondition1(struct set2D *powerSetofSomeSet, struct set2D *setP){
-    bool isExist = false;
-    int XSizeGreater0;
-    int XisInP;
     coord location = {0};
+    struct set1D elemX;
+    bool isExist = false;
+    int elemXsizeIsNotNull;
+    int elemXisInsideSetP = 0;
     int i, j;
     for (i = 0; i < powerSetofSomeSet->width && !isExist; i++){
-        XSizeGreater0 = powerSetofSomeSet->D2Array[i].length > 0;
-        XisInP = set2DSearch1Dkey(&powerSetofSomeSet->D2Array[i], setP, location);
-        printf("X exist %d and is X in P %d\n", XSizeGreater0, XisInP);
-        if(XSizeGreater0 && XisInP){
+        elemX = powerSetofSomeSet->D2Array[i];
+        elemXsizeIsNotNull = powerSetofSomeSet->D2Array[i].length > 0;
+        elemXisInsideSetP = set2DSearchFor1Dkey(&powerSetofSomeSet->D2Array[i], setP, location);
+        if (elemXsizeIsNotNull && elemXisInsideSetP)
             isExist = true;
-        }
     }
     return isExist;
 }
