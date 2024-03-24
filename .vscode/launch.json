@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Bobby/Documents/Logyre/02 Development/LOGS-CCDSTRU-MP",
-      "program": "c:/Users/Bobby/Documents/Logyre/02 Development/LOGS-CCDSTRU-MP/build/Debug/outDebug",
+      "cwd": ".",
+      "program": "build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

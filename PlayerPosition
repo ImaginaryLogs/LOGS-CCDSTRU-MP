@@ -1,0 +1,247 @@
+#include <stdio.h>
+
+int a, b;
+
+void findplayer ()
+{
+		if (a == 1)
+		{
+			if (b == 1)
+			{
+				printf ("1x1");	
+			}	
+			
+			else if (b == 2)
+			{
+				printf ("1x2");
+			}
+			
+			else if (b == 3)
+			{
+				printf ("1x3");
+			}
+			
+			else if (b == 4)
+			{
+				printf ("1x4");
+			}
+			
+			else if (b == 5)
+			{
+				printf ("1x5");
+			}
+			
+			else if (b == 6)
+			{
+				printf ("1x6");
+			}
+			
+			else 
+			{
+				printf ("b is not a number btween 1 and 6");
+			}
+		}
+		
+		else if (a == 2)
+		{
+			if (b == 1)
+			{
+				printf ("2x1");	
+			}	
+			
+			else if (b == 2)
+			{
+				printf ("2x2");
+			}
+			
+			else if (b == 3)
+			{
+				printf ("2x3");
+			}
+			
+			else if (b == 4)
+			{
+				printf ("2x4");
+			}
+			
+			else if (b == 5)
+			{
+				printf ("2x5");
+			}
+			
+			else if (b == 6)
+			{
+				printf ("2x6");
+			}
+		}
+		
+		else if (a == 3)
+		{
+			if (b == 1)
+			{
+				printf ("3x1");	
+			}	
+			
+			else if (b == 2)
+			{
+				printf ("3x2");
+			}
+			
+			else if (b == 3)
+			{
+				printf ("3x3");
+			}
+			
+			else if (b == 4)
+			{
+				printf ("3x4");
+			}
+			
+			else if (b == 5)
+			{
+				printf ("3x5");
+			}
+			
+			else if (b == 6)
+			{
+				printf ("3x6");
+			}
+			
+			else 
+			{
+				printf ("b is not a number btween 1 and 6");
+			}
+		}
+		
+		else if (a == 4)
+		{
+			if (b == 1)
+			{
+				printf ("4x1");	
+			}	
+				
+			else if (b == 2)
+			{
+				printf ("4x2");
+			}
+			
+			else if (b == 3)
+			{
+				printf ("4x3");
+			}
+				
+			else if (b == 4)
+			{
+				printf ("4x4");
+			}
+				
+			else if (b == 5)
+			{
+				printf ("4x5");
+			}
+				
+			else if (b == 6)
+			{
+				printf ("4x6");
+			}
+				
+			else 
+			{
+				printf ("b is not a number btween 1 and 6");
+			}
+		}
+	
+		else if (a == 5)
+		{
+			if (b == 1)
+			{
+				printf ("5x1");	
+			}	
+				
+			else if (b == 2)
+			{
+				printf ("5x2");
+			}
+			
+			else if (b == 3)
+			{
+				printf ("5x3");
+			}
+				
+			else if (b == 4)
+			{
+				printf ("5x4");
+			}
+				
+			else if (b == 5)
+			{
+				printf ("5x5");
+			}
+				
+			else if (b == 6)
+			{
+				printf ("5x6");
+			}
+				
+			else 
+			{
+				printf ("b is not a number btween 1 and 6");
+			}
+		}
+	
+		else if (a == 6)
+		{
+			if (b == 1)
+			{
+				printf ("6x1");	
+			}	
+				
+			else if (b == 2)
+			{
+				printf ("6x2");
+			}
+			
+			else if (b == 3)
+			{
+				printf ("6x3");
+			}
+				
+			else if (b == 4)
+			{
+				printf ("6x4");
+			}
+				
+			else if (b == 6)
+			{
+				printf ("6x5");
+			}
+				
+			else if (b == 6)
+			{
+				printf ("6x6");
+			}
+				
+			else 
+			{
+				printf ("b is not a number btween 1 and 6");
+			}
+		}
+		
+		else 
+		{
+			printf ("a is not a number btween 1 and 6");
+		}
+}
+
+int main ()
+{
+	printf ("Input Number: ");
+	scanf ("%d", &a);
+	printf ("\n");
+	printf ("Input Number: ");
+	scanf ("%d", &b);
+	
+	findplayer();
+	
+	return 0;
+}
