@@ -1,5 +1,4 @@
-#include "../../src/funcsSet2D.h"
-
+#include "../../src/funcsSystem.h"
 void 
 initializeS(struct set2D *setS){
     int i;

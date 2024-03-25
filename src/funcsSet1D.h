@@ -110,7 +110,7 @@ powerSet1D(struct set1D *setDEST, struct set2D *setSRCE){
     for(i = 0; i < powerSetSize; i++){
         elements = 0;
         for(j = 0; j < setDEST->length; j++){
-            if(i & (1 << j)){
+            if((1 << j) & i){
                 coordCopy(setSRCE->D2Array[i].D1Array[elements], setDEST->D1Array[j]);
                 elements++;
             }
