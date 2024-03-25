@@ -581,15 +581,18 @@ NextPlayerMove1(coord pos,
 
 void 
 GameOver2(bool *over, bool *next, struct set1D *C1, struct set1D *C2, struct set2D *setP){
-    String15 result = "";
+    char result[16] = "";
+    char Awin[16] = "A wins.\n";
+    char Bwin[16] = "B wins.\n";
     int choice;
     if (*over && *next && setKencompassesSetP(C1, setP))
-        strcpy(result, "A wins.\n");
+        strcpy(result, Awin);
 
     if (*over && !*next && setKencompassesSetP(C2, setP))
-        strcpy(result, "B wins.\n");
+        strcpy(result, Bwin);
 
-    printf("%s", result);
+    if (*over)
+       printf("\nWINNER: %s\n", result);
     
     if (*over && (setKencompassesSetP(C1, setP) || setKencompassesSetP(C2, setP)))
         scanf("%d", &choice);

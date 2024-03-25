@@ -39,12 +39,6 @@ int main()
     printPlayerBoard(&C1, &C2, 2);
 
     while (!over) {
-        RepeatGetCoord(input);
-        updateOver(&F3, &C1, &C2, &over, &setP);
-        NextPlayerMove1(input, &F, &F1, &F2, &F3, over, &good, next, &setS, &C1, &C2, i);
-        updateOver(&F3, &C1, &C2, &over, &setP);
-        GameOver2(&over, &next, &C1, &C2, &setP);
-
         printf("\n\n");
         printf("F1, F2:\n");
         printPlayerBoard(&F1, &F2, 6);
@@ -53,6 +47,12 @@ int main()
         printf("C1, C2:\n");
         printPlayerBoard(&C1, &C2, 2);
         printf("\n\n");
+
+        RepeatGetCoord(input);
+        updateOver(&F3, &C1, &C2, &over, &setP);
+        NextPlayerMove1(input, &F, &F1, &F2, &F3, over, &good, next, &setS, &C1, &C2, i);
+        updateOver(&F3, &C1, &C2, &over, &setP);
+        GameOver2(&over, &next, &C1, &C2, &setP);
         i++;
     }
     
