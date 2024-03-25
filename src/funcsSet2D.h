@@ -69,35 +69,32 @@ set2DSearch0Dkey(coord key, struct set2D *setSource, coord location){
  */
 bool 
 set2DSearch1Dkey(struct set1D *key, struct set2D *setSource, int *location){
-    int i, j;
+    int i = 0, j = 0;
     int isSearch1DSuccessful;
-    int isFound = false;
+    int isFound = 0;
 
     printf("\tSearching: set with size %d\n", key->length);
     set1DPrint(key);
-    printf("\tinside the set with width %d\n", setSource->width);
-    set2DPrint(setSource);
+    //printf("\tinside the set with width %d\n", setSource->width);
+    //set2DPrint(setSource);
     *location = -1;
-    if (setSource->D2Array[0].length == key->length){
-        //printf("Null set found!");
-        *location = 0;
-        isFound = true;
-    } 
-
-    for (i = 0; i < key->length && !isFound; i++){
+    
+    for (i = 0; i < setSource->width && !isFound; i++){
         isSearch1DSuccessful = false;
-        
 
-        for (j = 0; j < setSource->D2Array[i].length && !isSearch1DSuccessful; j++)
-            isSearch1DSuccessful = set1DEqual(key, &setSource->D2Array[j]);
-        
+        if (setSource->width > 1 && setSource->D2Array[i].length == key->length && key->length == 0){
+            printf("\tNull set found!\n");
+            *location = 0;
+            isFound = true;
+        } else
+            isSearch1DSuccessful = set1DEqual(key, &setSource->D2Array[i]);
 
         if (isSearch1DSuccessful){
             isFound = true;
             *location = i;
         }
     }
-    printf("\tReturned: %d\n", isFound);
+    //printf("\t\\->Returned: %d\n", isFound);
     return isFound; 
 }
 
@@ -112,12 +109,13 @@ set2DUnion(struct set2D *A, struct set2D *B, struct set2D *C){
     
     if (A->D2Array->length == 0 && set2DSearch1Dkey(A->D2Array, C, &loc)) {
         C->width++;
-        countC++;   
+        countC++; 
+        printf("Null!\n"); 
     }
 	for(i = 0; i < A->width; i++){
-        
+        set1DPrint(A->D2Array + i);
 		if (!set2DSearch1Dkey(A->D2Array + i , C, &loc)){
-            // printf("Same!\n");
+            printf("Same!\n");
             // set1DPrint(A->D2Array + i);
             // set1DPrint(C->D2Array + countC);
 			set1DCopy(C->D2Array + countC, A->D2Array + i);
@@ -129,6 +127,7 @@ set2DUnion(struct set2D *A, struct set2D *B, struct set2D *C){
 	
 	for(i = 0; i < B->width; i++){
 		isElemBUnique = false;
+        set1DPrint(B->D2Array + i);
 		if (!set2DSearch1Dkey(B->D2Array + i, C, &loc)){
 			isElemBUnique = true;
 		}
@@ -191,8 +190,7 @@ set2DDiff(struct set2D *A, struct set2D *B, struct set2D *C)
 }
 
 int
-set2DIntersect(struct set2D *A, struct set2D *B, struct set2D *C)
-{
+set2DIntersect(struct set2D *A, struct set2D *B, struct set2D *C) {
 	int i;
 	int isBothPresent = 0;
 	int countAUnionB;
@@ -203,8 +201,8 @@ set2DIntersect(struct set2D *A, struct set2D *B, struct set2D *C)
     set2DClear(C); 
     set2DClear(&AUnionB); 
 	countAUnionB = set2DUnion(A, B, &AUnionB);
-
-    printf("AuB: %d\n", countAUnionB);
+    //set2DPrint(&AUnionB);
+    //printf("AuB: %d\n", countAUnionB);
 	locA = 0;
 	locB = 0;
     locC = 0;

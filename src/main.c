@@ -50,11 +50,11 @@ initializeS(struct set2D *setS){
     };
 
     for (i = 0; i < 3; i++){
-        set1DCopyFromCoord1D(setS->D2Array[i].D1Array, Quad[i], 5);
+        set1DCopyFromCoord1D(setS->D2Array + i, Quad[i], 5);
         setS->D2Array[i].length = 5;
     }
     // i = 3 after loop
-    set1DCopyFromCoord1D(setS->D2Array[i].D1Array, Quad[i], 6);
+    set1DCopyFromCoord1D(setS->D2Array + i, Quad[i], 6);
     setS->D2Array[i].length = 6;
     setS->width = 4;
     setS->maxSize = 6;
@@ -76,7 +76,7 @@ initializeP(struct set2D *setP){
     };
 
     for (i = 0; i < 2; i++){
-        set1DCopyFromCoord1D(setP->D2Array[i].D1Array, Duo[i], 2);
+        set1DCopyFromCoord1D(setP->D2Array + i, Duo[i], 2);
         setP->D2Array[i].length = 2;
     }
     setP->width = 2;
@@ -322,34 +322,34 @@ NextPlayerMove(coord pos,
     if(!over && next && set1DSearch0Dkey(pos, F3, &loc)){
         *good = !*good;
         set1DUnion(F1, &set1DAandB, &temp);
-        printf("New F1: %d\n", temp.length);
+        //printf("New F1: %d\n", temp.length);
         set1DPrint(&temp); 
         *F1 = temp;
         updateF3(F, F1, F2, F3);
-        printf("B2 1\n");
+        //printf("B2 1\n");
     }
 
     if(!over && !next && set1DSearch0Dkey(pos, F3, &loc)){
         *good = !*good;
         set1DUnion(F2, &set1DAandB, &temp);
         set1DPrint(&temp); 
-        printf("New F2: %d\n", temp.length);
+        //printf("New F2: %d\n", temp.length);
         *F2 = temp;
         updateF3(F, F1, F2, F3);
-        set1DPrint(F1);
-        printf("B2 2\n");
+        //set1DPrint(F1);
+        //printf("B2 2\n");
     }   
     //printf("F1 F2 size: %d %d\n", F1->length, F2->length);
     powerSet1D(F1, &powerSetF1);
     powerSet1D(F2, &powerSetF2);
 
     //printf("powerSetF1: \n");
-    set2DPrint(&powerSetF1);
+    //set2DPrint(&powerSetF1);
     //printf("powerSetF2: \n");
-    set2DPrint(&powerSetF2);
+    //set2DPrint(&powerSetF2);
 
-    set2DIntersect(&powerSetF1, setS, &pF1IntersectS);
-    set2DIntersect(&powerSetF2, setS, &pF2IntersectS);
+    set2DIntersect(setS, &powerSetF1, &pF1IntersectS);
+    set2DIntersect(setS, &powerSetF2, &pF2IntersectS);
     printf("pF1IntersectS: \n");   
     set2DPrint(&pF1IntersectS);
     printf("pF2IntersectS: \n");

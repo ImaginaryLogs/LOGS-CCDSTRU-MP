@@ -1,4 +1,4 @@
-#include "../src/funcsSet2D.h"
+#include "../../src/funcsSet2D.h"
 #include <string.h>
 #include <windows.h>
 
@@ -24,23 +24,25 @@ void
 initializeB(struct set1D *setB){
     int i;
     coord Quad[6][6] = {
-        {}, 
+        {{1, 1}, {2, 2}}
     };
-    int size = 0;
+    int size = 2;
+
 
     set1DCopyFromCoord1D(setB->D1Array, Quad[0], size);
-    setB->length = size;
 
+    setB->length = size;
+    setB->maxSize = 2;
 }
 
 int main(){
+    struct set2D setA, setC;
     struct set1D setB;
-    struct set2D setA;
     initializeA(&setA);
     initializeB(&setB);
-    coord loc;
-    printf("%d\n", set2DSearch1Dkey(&setB, &setA, loc));
-    printf("{%d, %d}\n", loc[0], loc[1]);
+    int loc;
+    printf("%d\n", set2DSearch1Dkey(&setB, &setA, &loc));
+    printf("%d\n", loc);
 
     return 0;
 }

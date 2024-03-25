@@ -49,15 +49,18 @@ void coord1DPrint(coord set[], int size){
 }
 
 /**
- * @brief (Array1D) Srce[] := Dest[]
- * @note Copies SRCE (a set of 1D Array of Coordinates) to DEST (a set of 1D Array of Coordinates)
- * @param *srce: Source Coord
- * @param *dest: Destination
+ * @brief (Struct <- Array1D) Srce[] := Dest[]
+ * @note Copies SRCE (struct) to DEST (1D Array)
+ * @param *DEST: Source Coord
+ * @param *SRCE: Destination
  * @param sizeDest: Size of Destination
  */
-void set1DCopyFromCoord1D(coord *srce, coord *dest, int sizeDest){
+void set1DCopyFromCoord1D(struct set1D *DEST, coord *SRCE, int sizeDest){
     int i;
     for(i = 0; i < sizeDest; i++) {
-        coordCopy(srce[i], dest[i]);
+        //coordPrint(DEST->D1Array[i]);
+        //coordPrint(SRCE[i]);
+        printf("\n");
+        coordCopy(DEST->D1Array[i], SRCE[i]);
     }
 }

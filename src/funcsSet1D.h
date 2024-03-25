@@ -14,7 +14,7 @@ set1DPrint(struct set1D *set){
     printf("\t{ ");
     for(i = 0; i < size; i++)
         coordPrint(set->D1Array[i]);
-    printf(" }\n");
+    printf("}\n");
 }
 
 /**
@@ -67,16 +67,32 @@ set1DSearch0Dkey(coord key, struct set1D *setSource, int *location){
 
 bool 
 set1DEqual(struct set1D *set1DSRCE, struct set1D *set1DDEST){
+    struct set1D biggerSet, smallerSet;
+
     bool isMembersEqual = true;
-    int i;
-    int size = (set1DSRCE->length >= set1DDEST->length) ? set1DSRCE->length : set1DDEST->length;
-    printf("SRCE == DEST?\n");
-    set1DPrint(set1DSRCE);
-    set1DPrint(set1DDEST);
-    for(i = 0; i < size && isMembersEqual; i++){
-        isMembersEqual = isMembersEqual && coordEqual(set1DSRCE->D1Array[i], set1DDEST->D1Array[i]);
+    int i, j;
+    int maxSize = (set1DSRCE->length >= set1DDEST->length) ? set1DSRCE->length : set1DDEST->length;
+    int minSize = (set1DSRCE->length < set1DDEST->length) ? set1DSRCE->length : set1DDEST->length;
+
+    if (set1DSRCE->length > set1DDEST->length) {
+        biggerSet = *set1DSRCE;
+        smallerSet = *set1DDEST;
+    } else {
+        smallerSet = *set1DSRCE;
+        biggerSet = *set1DDEST;
     }
-    return isMembersEqual && set1DSRCE->length == set1DDEST->length && set1DSRCE->maxSize == set1DDEST->maxSize;
+
+    for (i = 0; i < maxSize && isMembersEqual; i++){
+        isMembersEqual = false;
+        for(j = 0; j < minSize && !isMembersEqual; j++){
+            if (coordEqual(biggerSet.D1Array[i], smallerSet.D1Array[j])){
+                isMembersEqual = true;
+            }
+        }
+    }
+    
+    //printf("\tEqual? %d\n\n", isMembersEqual);
+    return isMembersEqual;
 }
 
 /**
@@ -150,7 +166,7 @@ set1DUnion(struct set1D *A, struct set1D *B, struct set1D *C)
 		if (!set1DSearch0Dkey(B->D1Array[i], C, &loc)){
 			isElemBUnique = true;
 		}
-		printf("Is B unique? %d\n", isElemBUnique);
+		//printf("Is B unique? %d\n", isElemBUnique);
 		if (isElemBUnique) {
 			coordCopy(C->D1Array[countC], B->D1Array[i]);
             C->length++;
