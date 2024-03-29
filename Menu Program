@@ -1,0 +1,32 @@
+#include <stdio.h>
+int a;
+int b = 0;
+
+int main ()
+{
+	do
+	{
+		printf("Welcome To The MP Project\n");
+		printf("Enter 0 to play the game\n");
+		printf("Enter 1 to exit program\n");
+		printf("Input:");
+		scanf("%d", &a);
+		if (a == 0)
+		{
+			b == 1;
+			printf("Game Ended");
+		}
+		
+		else if (a == 1)
+		{
+			//insert game functions here//
+		}
+		
+		else
+		{
+			printf("Invalid Number. Please Enter 0 or 1");
+		}
+	}
+	while (b = 0);
+	return 0;
+}
