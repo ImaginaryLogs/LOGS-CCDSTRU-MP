@@ -27,6 +27,7 @@ int main()
     bool next = false;	
     bool over = false;
     coord input = {1, 1};
+	
     do
 	{
 		printf("Welcome To The MP Project\n");
