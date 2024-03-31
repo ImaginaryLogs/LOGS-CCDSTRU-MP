@@ -1,6 +1,7 @@
 #include "../../src/funcsSystem.h"
 void 
-initializeS(struct set2D *setS){
+initializeS(struct set2D *setS)
+{
     int i;
     coord Quad[6][6] = {
         {{1, 1}, {1, 3}, {2, 2}, {3, 1}, {3, 3}}, 
@@ -9,10 +10,11 @@ initializeS(struct set2D *setS){
         {{4, 1}, {4, 3}, {5, 1}, {5, 3}, {6, 1}, {6, 3}}
     };
 
-    for (i = 0; i < 3; i++){
-        set1DCopyFromCoord1D(setS->D2Array + i, Quad[i], 5);
-        setS->D2Array[i].length = 5;
-    }
+    for (i = 0; i < 3; i++)
+        {
+            set1DCopyFromCoord1D(setS->D2Array + i, Quad[i], 5);
+            setS->D2Array[i].length = 5;
+        }
     // i = 3 after loop
     set1DCopyFromCoord1D(setS->D2Array + i, Quad[i], 6);
     setS->D2Array[i].length = 6;
@@ -21,7 +23,9 @@ initializeS(struct set2D *setS){
 }
 
 void 
-initializeB(struct set1D *setB){
+initializeB(struct set1D *setB)
+
+{
     int i;
     coord Quad2[6] = { {1, 1}, {2, 2}, {3, 3}, {3, 1}, {1, 3} };
     int size = 6;
@@ -32,7 +36,8 @@ initializeB(struct set1D *setB){
     setB->maxSize = 6;
 }
 
-int main(){
+int main()
+{
     struct set1D setB;
     struct set2D setS, powerSetB, setC;
     
