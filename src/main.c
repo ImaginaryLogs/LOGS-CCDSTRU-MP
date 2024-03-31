@@ -45,13 +45,13 @@ int main()
 		{
 			while (!over) 
 			{
-	                RepeatGetCoord2(&F1, &F2, &F3, &C1, &C2, input, &next);
-	                updateOver(&F3, &C1, &C2, &over, &setP);
-	                NextPlayerMove1(input, &F, &F1, &F2, &F3, over, &good, next, &setS, &C1, &C2, i);
-	                updateOver(&F3, &C1, &C2, &over, &setP);
-	                GameOver2(&over, &next, &C1, &C2, &setP, &F1, &F2, &F3, input);
-	                i++;
-	          	}
+                RepeatGetCoord2(&F1, &F2, &F3, &C1, &C2, input, &next);
+                updateOver(&F3, &C1, &C2, &over, &setP);
+                NextPlayerMove1(input, &F, &F1, &F2, &F3, over, &good, next, &setS, &C1, &C2, i);
+                updateOver(&F3, &C1, &C2, &over, &setP);
+                GameOver2(&over, &next, &C1, &C2, &setP, &F1, &F2, &F3, input);
+                i++;
+          	}
 			
 		} else
 			{
