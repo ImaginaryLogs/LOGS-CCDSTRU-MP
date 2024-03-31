@@ -301,7 +301,7 @@ printPlayerBoard2(struct set1D *F1, struct set1D *F2, struct set1D *F3, struct s
     printf("Player %c's", *next + 'A');
     SetConsoleTextAttribute(hConsoleOutput, FG_WHITE);
     printf(" turn.\n");
-    printf("\n      Y:        C1 and C2                             F3\n");
+    printf("\n      Y:     F1 C1 and C2 C2                             F3\n");
     for (i = size; i >= 1; i--){
         // TOP PART
         if (i != size){
