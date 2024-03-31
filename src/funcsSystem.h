@@ -1,6 +1,7 @@
 #include "funcsSet2D.h"
 #include <string.h>
 #include <windows.h>
+#include <conio.h>
 
 #define FG_WHITE (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
 #define FG_RED FOREGROUND_RED
@@ -29,7 +30,6 @@ thereExistCondition1(struct set2D *powerSetofSomeSet, struct set2D *setP){
     for (i = 0; i < powerSetofSomeSet->width && !isExist; i++){
         elemXsizeIsNotNull = powerSetofSomeSet->D2Array[i].length > 0;
         elemXisInsideSetP = set2DSearch1Dkey(&powerSetofSomeSet->D2Array[i], setP, location);
-        printf("|X| > 0 and isInsideSetP: %d && %d\n", elemXsizeIsNotNull, elemXisInsideSetP);
         if (elemXsizeIsNotNull && elemXisInsideSetP)
             isExist = true;
     }
@@ -47,7 +47,7 @@ setKencompassesSetP(struct set1D * SetK, struct set2D *setP){
     for(i = 0; i < powerSetSize && !isExist; i++){
         elements = 0;
         set1DClear(&sliceOfPowerSet);
-        for(j = 0; j < SetK->length; j++){
+        for(j = 0; j < SetK->length; j++){      
             if ((1 << j) & i) {
                 coordCopy(sliceOfPowerSet.D1Array[elements], SetK->D1Array[j]);
                 elements++;
@@ -55,14 +55,15 @@ setKencompassesSetP(struct set1D * SetK, struct set2D *setP){
         }
         sliceOfPowerSet.length = elements;
         elemXsizeIsNotNull = sliceOfPowerSet.length > 0;
-        elemXisInsideSetP = set1DEqual(&sliceOfPowerSet, setP->D2Array);
-        elemXisInsideSetP = set1DEqual(&sliceOfPowerSet, setP->D2Array + i);
-        printf("|X| > 0 and isInsideSetP: %d && %d\n", elemXsizeIsNotNull, elemXisInsideSetP);
+        elemXisInsideSetP = set1DEqual(&sliceOfPowerSet, setP->D2Array) || set1DEqual(&sliceOfPowerSet, setP->D2Array + i);
         if (elemXsizeIsNotNull && elemXisInsideSetP)
             isExist = true;
     }
+
     return isExist;
 }
+
+
 
 int
 patternF1inS(struct set1D *F, struct set2D *S){
@@ -91,7 +92,7 @@ patternF1inS(struct set1D *F, struct set2D *S){
         if(slicePSetFnS.D2Array->length > 0){
             
             set2DUnion(&slicePSetFnS, &PSetFnS, &temp);
-            set2DPrint(&PSetFnS);   
+            //set2DPrint(&PSetFnS);   
             PSetFnS = temp;
         }
     }
@@ -202,7 +203,7 @@ printGrid(struct set1D points){
         }
         printf("|\n");
     }
-    printf("*---*---*---*---*---*---*\n");
+    printf("*---*---*---*---*---*---*\n\n");
 }
 
 void
@@ -260,12 +261,173 @@ printPlayerBoard(struct set1D *F1, struct set1D *F2, int size){
     for(j = 1; j <= size; j++){
         printf("---*");
     }
-    printf("\n  ");
+    printf("\n ");
+    for(j = 1; j <= size; j++){
+        printf("   %d", j);
+    }
+    printf("  :X\n\n");
+}
+
+void
+printPlayerBoard2(struct set1D *F1, struct set1D *F2, struct set1D *F3, struct set1D *C1, struct set1D *C2, coord pointer, int *next){   
+    HANDLE hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsoleOutput, FG_WHITE);
+    int isFoundF1 = false, isFoundF2 = false, isFoundF3 = false;
+    int isFoundPointer = false, isFoundF2Pointer = false;
+    int isFoundC1 = false, isFoundC2 = false;
+    int i = 0, j = 0, k = 0;
+    int size = 6;
+    int BG = 0;
+    int FG = 0;
+    coord current, region;
+    unsigned char cIntersect = 197; 
+    unsigned char cHLine = 196; 
+    unsigned char cVLine = 179;
+    unsigned char cTDown = 194;
+    unsigned char cTUp = 193;
+    unsigned char cULCorner = 192;
+    unsigned char cURCorner = 217;
+    unsigned char cDLCorner = 218;
+    unsigned char cDRCorner = 191;
+    unsigned char cTRight = 180;
+    unsigned char cTLeft = 195;
+    unsigned char cBoxShade = 177;
+
+    printf("It is ");
+    if (*next)
+        SetConsoleTextAttribute(hConsoleOutput, FG_RED);
+    else
+        SetConsoleTextAttribute(hConsoleOutput, FG_BLUE);
+    printf("Player %c's", *next + 'A');
+    SetConsoleTextAttribute(hConsoleOutput, FG_WHITE);
+    printf(" turn.\n");
+    printf("\n      Y:        C1 and C2                             F3\n");
+    for (i = size; i >= 1; i--){
+        // TOP PART
+        if (i != size){
+            printf("\t%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", cTLeft, cHLine, cHLine, cHLine, cIntersect, cHLine, cHLine, cHLine, cIntersect, cHLine, cHLine, cHLine, cIntersect, cHLine, cHLine, cHLine, cIntersect, cHLine, cHLine, cHLine, cIntersect, cHLine, cHLine, cHLine, cTRight);
+            printf("\t  ");
+            printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", cTLeft, cHLine, cHLine, cHLine, cIntersect, cHLine, cHLine, cHLine, cIntersect,cHLine, cHLine, cHLine, cIntersect, cHLine, cHLine, cHLine, cIntersect, cHLine, cHLine, cHLine, cIntersect, cHLine, cHLine, cHLine, cTRight);
+        } else {
+            printf("\t%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", cDLCorner, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cDRCorner);
+            printf("\t  ");
+            printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", cDLCorner, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cTDown, cHLine, cHLine, cHLine, cDRCorner);
+        }
+        
+        printf("\n");
+
+        current[1] = i;
+        printf("      %d ", i);
+        for (j = 1; j <= size; j++){
+            current[0] = j;
+            isFoundF1 = false;
+            isFoundF2 = false;
+            isFoundPointer = coordEqual(current, pointer);
+            isFoundC1 = false;
+            isFoundC2 = false;
+
+            for(k = 0; k < F1->length && !isFoundF1; k++){
+                if (coordEqual(current, F1->D1Array[k])){
+                    isFoundF1 = true;
+                } 
+            }
+
+            for(k = 0; k < F2-> length && !isFoundF2; k++){
+                if (coordEqual(current, F2->D1Array[k])){
+                    isFoundF2 = true;
+                }
+            }
+            BG = BG_BLACK;
+            coordCopy(region, current);
+
+            region[0] = (region[0] - 1) / 3 + 1;
+            region[1] = (region[1] - 1) / 3 + 1;
+
+            for(k = 0; k < C1->length && !isFoundC1; k++){
+                if (coordEqual(region, C1->D1Array[k])){
+                    isFoundC1 = true;
+                    BG = BACKGROUND_RED;
+                } 
+            }
+
+            for(k = 0; k < C2-> length && !isFoundC2; k++){
+                if (coordEqual(region, C2->D1Array[k])){
+                    isFoundC1 = true;
+                    BG = BACKGROUND_BLUE;
+                }
+            }
+
+            if (isFoundC1 && isFoundC2)
+                BG = BACKGROUND_RED | BACKGROUND_BLUE;
+
+            if (isFoundF1 && isFoundF2)
+                FG = FG_PURP | FOREGROUND_INTENSITY;
+            else if (isFoundF1)
+                FG = FG_RED | FOREGROUND_INTENSITY;
+            else if (isFoundF2)
+                FG = FG_BLUE | FOREGROUND_INTENSITY;
+            else 
+                FG = FG_WHITE;
+            printf("%c", cVLine);
+
+            SetConsoleTextAttribute(hConsoleOutput, FG | BG);
+            if (isFoundPointer)
+                printf(">");
+            else
+                printf(" ");
+            
+            if (isFoundF1 && isFoundF2) {
+                printf("#");
+            } else if (isFoundF1) {
+                printf("O"); 
+            } else if (isFoundF2) {
+                printf("X");
+            } else
+                printf(" ");
+
+            if (isFoundPointer)
+                printf("<");
+            else
+                printf(" ");
+
+            SetConsoleTextAttribute(hConsoleOutput, FG_WHITE | BG_BLACK);
+        }
+        printf("%c\t", cVLine);
+        printf("%d ", i);
+        for (j = 1; j <= size; j++){
+            current[0] = j;
+            printf("%c", cVLine);
+            isFoundF3 = false;
+            for(k = 0; k < F3->length && !isFoundF1; k++){
+                if (coordEqual(current, F3->D1Array[k])){
+                    isFoundF3 = true;
+                }
+            }
+            if (isFoundF3)
+                printf(" X ");
+            else
+                printf("   ");
+
+        }
+        printf("%c\n", cVLine);
+    }
+
+
+    printf("\t%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", cULCorner, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cURCorner);
+    printf("\t  ");
+    printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", cULCorner, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cTUp, cHLine, cHLine, cHLine, cURCorner);
+    printf("\n");
+    printf("       ");
+    for(j = 1; j <= size; j++){
+        printf("   %d", j);
+    }
+    printf("  :X\t ");
     for(j = 1; j <= size; j++){
         printf("   %d", j);
     }
     printf("  :X\n");
 }
+
 
 void 
 RepeatGetCoord(coord pos){
@@ -341,6 +503,48 @@ RepeatGetCoord(coord pos){
 }
 
 void
+RepeatGetCoord2(struct set1D *F1, struct set1D *F2, struct set1D *F3, struct set1D *C1, struct set1D *C2, coord pointer, int *next){
+    int isFound = false;
+    int returnVal = 0;
+    system("cls");
+    printPlayerBoard2(F1, F2, F3, C1, C2, pointer, next);
+    do {
+        returnVal = getch();
+        switch(returnVal) { 
+            case 72:
+                // code for arrow up
+                if (pointer[1] < 6)
+                    *(pointer + 1) += 1;
+                break;
+            case 80:
+                // code for arrow down
+                if (pointer[1] > 1)
+                    *(pointer + 1)  -= 1;
+                break;
+            case 77:
+                // code for arrow right
+                if (pointer[0] < 6){
+                    *(pointer)  += 1;
+                }
+                break;
+            case 75:
+                // code for arrow left
+
+                if (pointer[0] > 1)
+                        *(pointer)  -= 1;
+                break;
+            case 121:
+            case 13:
+                isFound = true;
+                break;
+        }
+    
+        system("cls");
+        printPlayerBoard2(F1, F2, F3, C1, C2, pointer, next);
+    } while (!isFound);
+}
+
+void
 updateF3(struct set1D *F, struct set1D *F1, struct set1D *F2, struct set1D *F3){
     struct set1D F1UnionF2;
     set1DUnion(F1, F2, &F1UnionF2);
@@ -356,7 +560,6 @@ updateOver(struct set1D *F3, struct set1D *C1, struct set1D *C2, bool *over, str
             thereExistCondition1(&pSetC1, P) ||
             thereExistCondition1(&pSetC2, P);
 }
-
 
 
 void 
@@ -390,20 +593,20 @@ NextPlayerMove(coord pos,
     set1DCandD.D1Array[0][1] = d;
     set1DCandD.length = 1;
 
-    printf("Sysinfo Turn %02d:\n", iteration);
-    printf("\t(a, b): ");
-    coordPrint(set1DAandB.D1Array[0]);
-    printf("\n\t(c, d): (%d, %d)\n", c, d);
-    printf("\tO = %d; G = %d; N = %d\n", over, *good, next);
-    printf("\n(!over & next & pos in F3):\n");
-    printf("   %d   &   %d   &    %d\n", !over, next, set1DSearch0Dkey(pos, F3, &loc));
+    // printf("Sysinfo Turn %02d:\n", iteration);
+    // printf("\t(a, b): ");
+    // coordPrint(set1DAandB.D1Array[0]);
+    // printf("\n\t(c, d): (%d, %d)\n", c, d);
+    // printf("\tO = %d; G = %d; N = %d\n", over, *good, next);
+    // printf("\n(!over & next & pos in F3):\n");
+    // printf("   %d   &   %d   &    %d\n", !over, next, set1DSearch0Dkey(pos, F3, &loc));
     if(!over && next && set1DSearch0Dkey(pos, F3, &loc)){
-        printf("\t=> Good = !Good\n");
+        // printf("\t=> Good = !Good\n");
         *good = !*good;
         set1DUnion(F1, &set1DAandB, &temp);
         //printf("New F1: %d\n", temp.length);
         //set1DPrint(&temp);
-        printf("\t=> F1 = F1 U {pos}\n");
+        // printf("\t=> F1 = F1 U {pos}\n");
         *F1 = temp;
         updateF3(F, F1, F2, F3);
         //printf("B2 1\n");
@@ -515,62 +718,62 @@ NextPlayerMove1(coord pos,
     set1DCandD.D1Array[0][1] = d;
     set1DCandD.length = 1;
 
-    printf("Sysinfo Turn %02d:\n", iteration);
-    printf("\t(a, b): ");
-    coordPrint(set1DAandB.D1Array[0]);
-    printf("\n\t(c, d): (%d, %d)\n", c, d);
-    printf("\tO = %d; G = %d; N = %d\n", over, *good, next);
-    printf("\n(!over & next & pos in F3):\n");
-    printf("   %d   &   %d   &    %d\n", !over, next, set1DSearch0Dkey(pos, F3, &loc));
-    printf("Before:");
-    printPlayerBoard(F1, F2, 6);
+    // printf("Sysinfo Turn %02d:\n", iteration);
+    // printf("\t(a, b): ");
+    // coordPrint(set1DAandB.D1Array[0]);
+    // printf("\n\t(c, d): (%d, %d)\n", c, d);
+    // printf("\tO = %d; G = %d; N = %d\n", over, *good, next);
+    // printf("\n(!over & next & pos in F3):\n");
+    // printf("   %d   &   %d   &    %d\n", !over, next, set1DSearch0Dkey(pos, F3, &loc));
+    // printf("Before:");
+    // printPlayerBoard(F1, F2, 6);
     if(set1DSearch0Dkey(pos, F3, &loc) && !over && next){
-        printf("\t=> Good = !Good\n");
+        // printf("\t=> Good = !Good\n");
         *good = !*good;
         set1DUnion(F1, &set1DAandB, &temp);
         //printf("New F1: %d\n", temp.length);
         //set1DPrint(&temp);
-        printf("\t=> F1 = F1 U {pos}\n");
+        // printf("\t=> F1 = F1 U {pos}\n");
         *F1 = temp;
         updateF3(F, F1, F2, F3);
         //printf("B2 1\n");
     }
-    printf("\n!over & !next & pos in F3:\n");
-    printf("   %d   &   %d   &    %d\n", !over, !next, set1DSearch0Dkey(pos, F3, &loc));
+    // printf("\n!over & !next & pos in F3:\n");
+    // printf("   %d   &   %d   &    %d\n", !over, !next, set1DSearch0Dkey(pos, F3, &loc));
 
     if(set1DSearch0Dkey(pos, F3, &loc) && !over && !next){
 
-        printf("\t=> Good = !Good\n");
+        // printf("\t=> Good = !Good\n");
         *good = !*good;
 
         set1DUnion(F2, &set1DAandB, &temp);
 
-        printf("\t=> F2 = F2 U {pos}\n");
+        // printf("\t=> F2 = F2 U {pos}\n");
         *F2 = temp;
         updateF3(F, F1, F2, F3);
 
     }
-    printf("After:"); 
-    printPlayerBoard(F1, F2, 6);
-    printf("\n!O & G & N & |P(F1) n S| > |C1|:\n");
-    printf(" %d & %d & %d & |%d| > |%d| :\n", !over, *good, next, patternF1inS(F1, setS), C1->length);
+    // printf("After:"); 
+    // printPlayerBoard(F1, F2, 6);
+    // printf("\n!O & G & N & |P(F1) n S| > |C1|:\n");
+    // printf(" %d & %d & %d & |%d| > |%d| :\n", !over, *good, next, patternF1inS(F1, setS), C1->length);
     if(patternF1inS(F1, setS) > C1->length && !over && *good && next){
         
         set1DClear(&temp);
         set1DUnion(C1, &set1DCandD, &temp);
         //set1DPrint(&temp);
-        printf("\tC1 = C1 u {(c, d)}\n");
+        // printf("\tC1 = C1 u {(c, d)}\n");
         *C1 = temp;
         //printf("B3\n");
     }
     
-    printf("\n!O & G & !N & |P(F2) n S| > |C2|:\n");
-    printf(" %d & %d & %d & |%d| > |%d| :\n", !over, *good, !next, patternF1inS(F2, setS), C2->length);
+    // printf("\n!O & G & !N & |P(F2) n S| > |C2|:\n");
+    // printf(" %d & %d & %d & |%d| > |%d| :\n", !over, *good, !next, patternF1inS(F2, setS), C2->length);
     if(patternF1inS(F2, setS) > C2->length && !over && *good && !next){
         set1DClear(&temp);
         set1DUnion(C2, &set1DCandD, &temp);
         //set1DPrint(&temp);
-        printf("\tC1 = C1 u {(c, d)}\n");
+        // printf("\tC1 = C1 u {(c, d)}\n");
         *C2 = temp;
         //printf("B4\n");
     }
@@ -580,22 +783,27 @@ NextPlayerMove1(coord pos,
 }
 
 void 
-GameOver2(bool *over, bool *next, struct set1D *C1, struct set1D *C2, struct set2D *setP){
-    char result[16] = "";
-    char Awin[16] = "A wins.\n";
-    char Bwin[16] = "B wins.\n";
+GameOver2(bool *over, bool *next, struct set1D *C1, struct set1D *C2, struct set2D *setP, struct set1D *F1, struct set1D *F2, struct set1D *F3, coord pointer){
+    String15 result = "";
+    String15 Awin = "A wins\n";
+    String15 Bwin = "B wins\n";
     int choice;
-    if (*over && *next && setKencompassesSetP(C1, setP))
-        strcpy(result, Awin);
 
-    if (*over && !*next && setKencompassesSetP(C2, setP))
-        strcpy(result, Bwin);
+    if (setKencompassesSetP(C1, setP) && *over && *next)
+        strcat(result, Awin);
 
-    if (*over)
-       printf("\nWINNER: %s\n", result);
+    if (setKencompassesSetP(C2, setP) && *over && !*next)
+        strcat(result, Bwin);
+
+    if (*over){
+        system("cls");
+        printPlayerBoard2(F1, F2, F3, C1, C2, pointer, next);
+        printf("\nWINNER: %s\n\n", result);
+    }
+        
     
     if (*over && (setKencompassesSetP(C1, setP) || setKencompassesSetP(C2, setP)))
-        scanf("%d", &choice);
+        getch();
 
     if (!*over) 
         *next = !(*next);

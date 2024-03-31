@@ -1,8 +1,6 @@
 
 #define MAXSIZE 72
-
-
-
+#define BG_BLACK (0x0)
 typedef char String15[16];
 typedef int coord[2];
 

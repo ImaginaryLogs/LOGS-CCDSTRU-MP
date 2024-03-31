@@ -58,9 +58,7 @@ void coord1DPrint(coord set[], int size){
 void set1DCopyFromCoord1D(struct set1D *DEST, coord *SRCE, int sizeDest){
     int i;
     for(i = 0; i < sizeDest; i++) {
-        //coordPrint(DEST->D1Array[i]);
-        //coordPrint(SRCE[i]);
-        printf("\n");
+
         coordCopy(DEST->D1Array[i], SRCE[i]);
     }
 }
