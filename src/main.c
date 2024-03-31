@@ -38,7 +38,6 @@ int main()
 		
 		if (a == 1) 
 		{
-			b == 1;
 			printf("Game Ended.\n");
 		} 
 		
@@ -59,7 +58,7 @@ int main()
 			printf("Invalid Number. Please Enter 0 or 1");
 			}
 	}
-	while (b = 0);
+	while (b == 0);
 
     return 0;
 }

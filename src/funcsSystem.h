@@ -273,7 +273,7 @@ printPlayerBoard2(struct set1D *F1, struct set1D *F2, struct set1D *F3, struct s
     HANDLE hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsoleOutput, FG_WHITE);
     int isFoundF1 = false, isFoundF2 = false, isFoundF3 = false;
-    int isFoundPointer = false, isFoundF2Pointer = false;
+    int isFoundPointer = false;
     int isFoundC1 = false, isFoundC2 = false;
     int i = 0, j = 0, k = 0;
     int size = 6;
@@ -291,7 +291,6 @@ printPlayerBoard2(struct set1D *F1, struct set1D *F2, struct set1D *F3, struct s
     unsigned char cDRCorner = 191;
     unsigned char cTRight = 180;
     unsigned char cTLeft = 195;
-    unsigned char cBoxShade = 177;
 
     printf("It is ");
     if (*next)
@@ -783,11 +782,10 @@ NextPlayerMove1(coord pos,
 }
 
 void 
-GameOver2(bool *over, bool *next, struct set1D *C1, struct set1D *C2, struct set2D *setP, struct set1D *F1, struct set1D *F2, struct set1D *F3, coord pointer){
+GameOver2(bool *over, int *next, struct set1D *C1, struct set1D *C2, struct set2D *setP, struct set1D *F1, struct set1D *F2, struct set1D *F3, coord pointer){
     String15 result = "";
     String15 Awin = "A wins\n";
     String15 Bwin = "B wins\n";
-    int choice;
 
     if (setKencompassesSetP(C1, setP) && *over && *next)
         strcat(result, Awin);

@@ -110,7 +110,10 @@ powerSet1D(struct set1D *setDEST, struct set2D *setSRCE){
     for(i = 0; i < powerSetSize; i++){
         elements = 0;
         for(j = 0; j < setDEST->length; j++){
-            if((1 << j) & i){
+            // The increase binary numbers corresponds to the selection of elements. j shifts 1 and acts as the mask whether or not to copy the function.
+            // 10010 means select the 2, 5 element.
+            // 11010 means select the 3, 4, 5 element.
+            if ((1 << j) & i){ 
                 coordCopy(setSRCE->D2Array[i].D1Array[elements], setDEST->D1Array[j]);
                 elements++;
             }
